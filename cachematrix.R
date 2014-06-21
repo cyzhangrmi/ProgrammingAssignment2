@@ -4,40 +4,27 @@
 ## Write a short comment describing this function
 
 makeCacheMatrix <- function(x = matrix()) {
-  
-  
-  m <- NULL                           
-  set <- function(y) {
-    x <<- y
-    m <<- NULL 
-  }                                                 # set matrix
-  get <- function() x                               # get matrix
-  setmatrix <- function(solve) m <<- solve          # set inverse matrix
-  getmatrix <- function() m                         # get inverse matrix
-  list(set = set, get = get,
-       setmatrix = setmatrix,
-       getmatrix = getmatrix)                       # create a list for all the functions above
-  
-  
+  m<-NULL
+  set<-function(y){
+    x<<-y
+    m<<-NULL
+  }                                            # set matrix
+  get<-function() x                            # get matrix
+  setmatrix<-function(solve) m<<- solve        # set inverse matrix
+  getmatrix<-function() m                      # get inverse matrix
+  list(set=set, get=get,
+       setmatrix=setmatrix,
+       getmatrix=getmatrix)                    #create a list
 }
 
-
-
-## Write a short comment describing this function
-
 cacheSolve <- function(x, ...) {
-  ## Return a matrix that is the inverse of 'x'
-  
-  m <- x$getmatrix()
-  if(!is.null(m)) {
-    message("getting cached data")
-    return(m)
+  m<-x$getmatrix()                            #get the x matrix's inverse cache
+  if(!is.null(m)){                            #if the cache of inverse maxtrix has been previously calculated
+    message("getting cached data")            #display the message "getting cached data"
+    return(m)                                 # return the previously cached inverse matrix
   }
-  data <- x$get()
-  m <- solve(data, ...)
-  x$setmatrix(m)
-  m
-  
-  
-  
+  matrix<-x$get()                           # if the inverse matrix is not cached, get the matrix  
+  m<-solve(matrix, ...)                     # calculate the inverse of the matrix
+  x$setmatrix(m)                            # store the inverse matrix in cache using the set function of makeCacheMatrix
+  m                                         # return the inverse matrix
 }
